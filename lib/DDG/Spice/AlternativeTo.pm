@@ -1,49 +1,40 @@
 package DDG::Spice::AlternativeTo;
+# ABSTRACT: Alternative software for some other software
 
+use strict;
 use DDG::Spice;
 
 triggers start => "free","opensource","commercial";
-triggers any => "alternative","alternatives";
+triggers any => "alternative","alternatives","alternativeto";
 
-spice from => '([^/]+)/(?:([^/]+)/(?:([^/]+)|)|)';
-spice to => 'http://api.alternativeto.net/software/$1/?$2&$3&count=6&callback={{callback}}';
+spice from => '([^/]+)/(.*?)/([^/]*)';
+spice to => 'http://api.alternativeto.net/software/$1/?platform=$2&license=$3&count=12&callback={{callback}}&key={{ENV{DDG_SPICE_ALTERNATIVETO_APIKEY}}}';
 
 my %alternatives = (
     'google' => 'googlecom',
     'photoshop' => 'adobe-photoshop',
     'yahoo' => 'yahoo-search',
     'bing' => 'bingcom',
+    'mac-os-x' => 'mac-os'
 );
 
 handle query_lc => sub {
-    if ($_ =~ /^(?:(free|opensource|commercial))?\s*(?:alternative(?:s|)?\s*?(?:to|for)\s*?)(\b(?!for\b).*?\b)(?:\s*?for\s(.*))?$/) {
-	my $prog = $2;
-	$prog =~ s/\s+$//g;
-	$prog =~ s/^\s+//g;
-	$prog =~ s/\s+/-/g;
-	$prog = $alternatives{$prog} if exists $alternatives{$prog};
+    if (/^(?:(free|open\s?source|commercial))?\s*(?:alternative(?:s|)?\s*?(?:to|for)\s*?)(\b(?!for\b).*?\b)(?:\s*?for\s(.*))?$/) {
+        my $license = $1 || "";
+        my $prog = $2 || "";
+        my $platform = $3 || "";
 
-        if ($1 and $3) {
-            # license and platform specified - queries like:
-            # -> free alternative to firefox for mac
-            # -> opensource matlab for linux
-            return $prog, "platform=".$3, "license=".$1.'/';
-        } elsif ($1 and $prog) {
-            # lincense secified only:
-            # -> free nod32
-            # -> opensource alternative to omnigraffle
-            return $prog, "license=".$1.'/';
-        } elsif ($3) {
-            # platform specified:
-            # -> TextMate for windows
-            # -> alternative to vim for linux
-            return $prog, "platform=".$3.'/';
-        } elsif($prog) {
-            # license and platform not specified
-            # in this case we need to match 'alternative(s) to':
-            # -> alternative to firefox
-            return $prog.'/';
+        $license =~ s/\s+//;
+
+        $prog =~ s/\s+$//g;
+        $prog =~ s/^\s+//g;
+        $prog =~ s/\s+/-/g;
+        $prog = $alternatives{$prog} if exists $alternatives{$prog};
+
+        if($platform) {
+            return $prog, $platform, $license;
         }
+        return $prog, "all", $license;
     }
     return;
 };

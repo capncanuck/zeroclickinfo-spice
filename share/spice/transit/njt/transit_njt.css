@@ -1,0 +1,76 @@
+.zci--transit_njt .tile--transit_njt {
+    text-align: center;
+    width: 13em;
+}
+
+.is-mobile .zci--transit_njt .tile--transit_njt {
+    width: 12.25em;
+}
+
+.tile--transit_njt .transit_njt__time {
+    font-size: 2.3em;
+    font-weight: 300;
+}
+
+.tile--transit_njt .transit_njt__details {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.tile--transit_njt .transit_njt__status-sep {
+    height: 12px;
+}
+
+.tile--transit_njt .transit_njt__sep-line {
+    background-color: #e1e1e1;
+    height: 1px;
+    width: 30px;
+    margin-bottom: 6px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.tile--transit_njt .transit_njt__status {
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+.tile--transit_njt .transit_njt__badge {
+    background-color: #e0e0e0;
+    height: 12px;
+    border-radius: 6px;
+    padding: 0 6px;
+    display: inline-block;
+}
+
+.tile--transit_njt .transit_njt__delayed {
+    background-color: #eea43e;
+}
+
+.tile--transit_njt .transit_njt__boarding {
+    background-color: #60ae50;
+}
+
+.tile--transit_njt .transit_njt__cancelled {
+    background-color: #e34c2d;
+}
+
+.tile--transit_njt .transit_njt__cancelled-tile {
+    background-color: #fafafa;
+    border-color: #fafafa;
+}
+
+.tile--transit_njt .transit_njt__bold-status {
+    font-weight: bold;
+}
+
+.tile--transit_njt .transit_njt__cancelled-tile .transit_njt__time,
+.tile--transit_njt .transit_njt__cancelled-tile .transit_njt__details,
+.tile--transit_njt .transit_njt__cancelled-tile .transit_njt__status {
+    color: #bbb;
+}
+
+.tile--transit_njt .transit_njt__no-track {
+    color: #aaa;
+}

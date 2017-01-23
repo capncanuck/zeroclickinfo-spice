@@ -1,3 +1,9 @@
 DDG-*
 .build
-*.swp
+*.sw*
+*~
+*.bak
+*#
+.jshintrc
+.DS_Store
+share/spice/meta/metadata.json
